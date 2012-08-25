@@ -22,7 +22,7 @@ def home(request):
     if launch_url.startswith(("http://127.0.0.1", "http://localhost")):
         return redirect("/launch")
     else:
-        return redirect("https://biocloudcentral.herokuapp.com/launch")
+        return redirect("https://dry-cliffs-5046.herokuapp.com/launch")
 
 # ## CloudMan launch and configuration entry details
 def launch(request):
