@@ -78,25 +78,27 @@ def runinstance(request):
                         kernel_id=image.kernel_id if image.kernel_id != '' else None,
                         ramdisk_id=image.ramdisk_id if image.ramdisk_id != '' else None,
                         placement=form['placement'])
-    if response["rs"] is not None:
-        rs = response["rs"]
-        request.session['ec2data']['instance_id'] = rs.instances[0].id
-        request.session['ec2data']['public_ip'] = rs.instances[0].ip_address #public_dns_name
-        request.session['ec2data']['image_id'] = rs.instances[0].image_id
-        request.session['ec2data']['kp_name'] = response['kp_name']
-        request.session['ec2data']['kp_material'] = response['kp_material']
-        request.session['ec2data']['sg_name'] = response['sg_names'][0]
+    request.session['ec2data']['instance_id'] = response.get('instance_id', None)
+    request.session['ec2data']['public_ip'] = response.get('instance_ip', None)
+    request.session['ec2data']['image_id'] = image.image_id
+    request.session['ec2data']['kp_name'] = response.get('kp_name', None)
+    request.session['ec2data']['kp_material'] = response.get('kp_material', None)
+    sg_name = response.get('sg_names', [])
+    if len(sg_names) > 0:
+        request.session['ec2data']['sg_name'] = sg_name[0]
+    else:
+        request.session['ec2data']['sg_name'] = 'N/A'
 
-        # Add an entry to the Usage table
-        try:
-            u = models.Usage(cloud_name=form["cloud_name"],
-                             cloud_type=form["cloud_type"],
-                             image_id=image.image_id,
-                             instance_type=instance_type,
-                             user_id=form["access_key"])
-            u.save()
-        except Exception, e:
-            log.debug("Trouble saving Usage data: {0}".format(e))
+    # Add an entry to the Usage table
+    try:
+        u = models.Usage(cloud_name=form["cloud_name"],
+                         cloud_type=form["cloud_type"],
+                         image_id=image.image_id,
+                         instance_type=instance_type,
+                         user_id=form["access_key"])
+        u.save()
+    except Exception, e:
+        log.debug("Trouble saving Usage data: {0}".format(e))
     return response
 
 def userdata(request):
