@@ -1,32 +1,21 @@
-# Django settings for biocloudcentral project.
+# Django settings for imogen project.
 import os
+import dj_database_url
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Enis Afgan', 'afgane@gmail.com'),
-    ('Brad Chapman', 'chapmanb@50mail.com'),
 )
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'biocloudcentral',       # Or path to database file if using sqlite3.
-        'USER': 'afgane',                # Not used with sqlite3.
-        'PASSWORD': 'fu5yOj2sn',         # Not used with sqlite3.
-        'HOST': 'localhost',             # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5910',                  # Set to empty string for default. Not used with sqlite3.
-    }
-}
+DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        #'LOCATION': '127.0.0.1:11211',
         }
 }
 
@@ -39,7 +28,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/London'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -96,7 +85,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'takj3d3$gv%^ulsdsp_q0-458%&rb7@#utq_%1g+*_9zp@ub09'
+SECRET_KEY = 'takj3d3$gv%^ulsdrp_q0-459%&rb7@#utq_%1g+*_9zp@ub09'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
