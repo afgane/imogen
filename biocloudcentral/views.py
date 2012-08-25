@@ -84,7 +84,7 @@ def runinstance(request):
     request.session['ec2data']['kp_name'] = response.get('kp_name', None)
     request.session['ec2data']['kp_material'] = response.get('kp_material', None)
     sg_name = response.get('sg_names', [])
-    if len(sg_names) > 0:
+    if len(sg_name) > 0:
         request.session['ec2data']['sg_name'] = sg_name[0]
     else:
         request.session['ec2data']['sg_name'] = 'N/A'
