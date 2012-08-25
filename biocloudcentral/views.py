@@ -164,8 +164,10 @@ def _get_placement_inner(request):
             if cloud_id != '' and a_key != '' and s_key != '':
                 # Needed to get the cloud connection
                 cloud = models.Cloud.objects.get(pk=cloud_id)
+                #log.debug("Getting placement for {0} on {1} cloud"\
+                    #.format(inst_type, cloud.name))
                 cml = CloudManLaunch(a_key, s_key, cloud)
-                cml._find_placements(cml.ec2_conn, inst_type, cloud.cloud_type)
+                placements = cml._find_placements(cml.ec2_conn, inst_type, cloud.cloud_type)
                 return {'placements': placements}
         else:
             log.error("Not a POST request")
